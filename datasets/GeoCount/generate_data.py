@@ -304,30 +304,39 @@ with open(os.path.join(shapes_dir, "task.json"), "w") as f:
     json.dump(json_data, f, indent=4)
 
 
-# Plot a grid of 20 examples
+# Save one image per example
 # --------------------------
-fig, axs = plt.subplots(4, 5, figsize=(15, 10))
-axs = axs.ravel()
+
+image_dir = os.path.join(shapes_dir, "images")
+os.makedirs(image_dir, exist_ok=True)
 
 for k in range(len(shapes_list)):
+
     shapes = shapes_list[k]
     intersection_coords = intersection_coords_list[k]
 
-    for i in range(len(shapes)):
+    fig, ax = plt.subplots(figsize=(4, 4))
+
+    # plot shapes
+    for shape in shapes:
         try:
-            axs[k].plot(*shapes[i].boundary.xy, linewidth=2)
+            ax.plot(*shape.boundary.xy, linewidth=2)
         except:
-            axs[k].plot(*shapes[i].xy, linewidth=2)
+            ax.plot(*shape.xy, linewidth=2)
 
-    all_coord_xs = [item[0] for item in intersection_coords]
-    all_coord_ys = [item[1] for item in intersection_coords]
-    axs[k].scatter(all_coord_xs, all_coord_ys, marker="o", s=50, c="k")
-    axs[k].set_xticks([])
-    axs[k].set_yticks([])
+    # plot intersection points
+    if len(intersection_coords) > 0:
+        xs = [p[0] for p in intersection_coords]
+        ys = [p[1] for p in intersection_coords]
+        ax.scatter(xs, ys, s=40, c="black")
 
-plt.savefig(
-    os.path.join(shapes_dir, "example_grid_{}.png".format(args.num_shapes)),
-    bbox_inches="tight",
-    pad_inches=0,
-)
-# --------------------------
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+    ax.set_aspect("equal")
+
+    plt.tight_layout()
+
+    save_path = os.path.join(image_dir, f"{k}.png")
+    plt.savefig(save_path, dpi=150)
+    plt.close()

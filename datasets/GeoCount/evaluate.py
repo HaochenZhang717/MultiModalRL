@@ -262,8 +262,8 @@ def main():
                 temperature=args.temperature,
                 top_p=args.top_p,
             )
-            print(f"[INFO] Generated text: {pred_text}")
-            breakpoint()
+            # print(f"[INFO] Generated text: {pred_text}")
+            # breakpoint()
             pred = extract_predicted_integer(pred_text)
         except Exception as e:
             pred_text = f"[ERROR] {repr(e)}"
@@ -279,6 +279,7 @@ def main():
             "idx": idx,
             "question": question,
             "gold": gold,
+            "output_text": pred_text,
             "prediction": pred,
             "correct": bool(correct),
             "raw_output": pred_text,
