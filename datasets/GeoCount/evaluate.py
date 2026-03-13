@@ -32,58 +32,70 @@ def extract_gold_answer(target_scores: Dict[str, int]) -> int:
     raise ValueError(f"Cannot find gold answer in target_scores: {target_scores}")
 
 
-def build_prompt(question: str, use_chat_template: bool = True) -> str:
+def build_prompt(question: str, use_chat_template: bool = True):
     """
-    A simple prompt for geometry counting.
-    We explicitly request a single integer answer.
+    Prompt template for geometry intersection counting.
+    The model is encouraged to reason step-by-step and finally output:
+        Final answer: <integer>
     """
+
     system_msg = (
-        "You are a careful mathematical reasoning assistant. "
-        "Solve the geometry counting problem and output only the final integer answer. "
-        "Do not output explanation. Do not output units. "
-        "Your final response must be a single integer."
+        "You are a mathematical reasoning assistant.\n\n"
+        "Carefully analyze geometry problems and reason step by step.\n"
+        "Intersection points occur when the boundaries of shapes cross each other.\n"
+        "Count all unique intersection points.\n\n"
+        "At the end, output the answer in the following format:\n"
+        "Final answer: <integer>"
     )
 
     user_msg = (
         f"{question}\n\n"
-        "Return only one integer, such as 0, 1, 2, or 5."
+        "Think step by step and determine the number of intersection points."
     )
 
     if use_chat_template:
         return {"system": system_msg, "user": user_msg}
     else:
-        return f"System: {system_msg}\nUser: {user_msg}\nAssistant:"
+        return f"System: {system_msg}\n\nUser: {user_msg}\n\nAssistant:"
 
 
 def extract_predicted_integer(text: str) -> Optional[int]:
     """
-    Try to robustly extract the final integer from model output.
+    Extract integer answer from model output.
+
     Priority:
-      1) boxed answer like \\boxed{3}
-      2) patterns like 'Answer: 3' or 'final answer is 3'
-      3) last integer appearing in the text
+    1. Final answer: X
+    2. boxed answer \\boxed{X}
+    3. Answer: X / answer is X
+    4. last integer in the text
     """
+
     if text is None:
         return None
 
     text = text.strip()
 
-    # \boxed{3}
+    # 1️⃣ Final answer
+    m = re.search(r"final\s*answer\s*[:=]\s*(-?\d+)", text, flags=re.IGNORECASE)
+    if m:
+        return int(m.group(1))
+
+    # 2️⃣ \boxed{X}
     m = re.findall(r"\\boxed\{(-?\d+)\}", text)
     if m:
         return int(m[-1])
 
-    # answer is 3 / Answer: 3 / final answer: 3
+    # 3️⃣ answer: X / answer is X
     patterns = [
-        r"(?:final answer is|final answer|answer is|answer)\s*[:：]?\s*(-?\d+)",
-        r"^\s*(-?\d+)\s*$",
+        r"(?:answer\s*is|answer)\s*[:=]?\s*(-?\d+)",
     ]
+
     for p in patterns:
         m = re.findall(p, text, flags=re.IGNORECASE)
         if m:
             return int(m[-1])
 
-    # fallback: last integer in text
+    # 4️⃣ fallback: last integer in text
     nums = re.findall(r"-?\d+", text)
     if nums:
         return int(nums[-1])
