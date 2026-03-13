@@ -1,0 +1,6 @@
+python evaluate_geometry_count.py \
+  --task_json ./shapes_3/task.json \
+  --model_name_or_path deepseek-ai/DeepSeek-R1-Distill-Qwen-7B \
+  --output_path outputs/deepseek_r1_distill_qwen_7b_shapes3.jsonl \
+  --use_chat_template \
+  --dtype bfloat16
