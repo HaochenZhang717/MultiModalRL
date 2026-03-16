@@ -246,49 +246,48 @@ def main():
 
     os.makedirs(os.path.dirname(args.output_path) or ".", exist_ok=True)
 
-    for idx, ex in enumerate(tqdm(examples, desc="Evaluating")):
-        question = ex["input"]
-        gold = extract_gold_answer(ex["target_scores"])
-
-        prompt_obj = build_prompt(question, use_chat_template=args.use_chat_template)
-
-        try:
-            pred_text = generate_one(
-                model=model,
-                tokenizer=tokenizer,
-                prompt_obj=prompt_obj,
-                device=args.device,
-                max_new_tokens=args.max_new_tokens,
-                temperature=args.temperature,
-                top_p=args.top_p,
-            )
-            print(f"[INFO] Generated text: {pred_text}")
-            # breakpoint()
-            pred = extract_predicted_integer(pred_text)
-        except Exception as e:
-            pred_text = f"[ERROR] {repr(e)}"
-            pred = None
-
-        correct = int(pred == gold)
-        num_correct += correct
-
-        if pred is None:
-            num_parse_fail += 1
-
-        item = {
-            "idx": idx,
-            "question": question,
-            "gold": gold,
-            "output_text": pred_text,
-            "prediction": pred,
-            "correct": bool(correct),
-            "raw_output": pred_text,
-        }
-        results.append(item)
-
     with open(args.output_path, "w", encoding="utf-8") as f:
-        for item in results:
+        for idx, ex in enumerate(tqdm(examples, desc="Evaluating")):
+            question = ex["input"]
+            gold = extract_gold_answer(ex["target_scores"])
+
+            prompt_obj = build_prompt(question, use_chat_template=args.use_chat_template)
+
+            try:
+                pred_text = generate_one(
+                    model=model,
+                    tokenizer=tokenizer,
+                    prompt_obj=prompt_obj,
+                    device=args.device,
+                    max_new_tokens=args.max_new_tokens,
+                    temperature=args.temperature,
+                    top_p=args.top_p,
+                )
+                print(f"[INFO] Generated text: {pred_text}")
+                # breakpoint()
+                pred = extract_predicted_integer(pred_text)
+            except Exception as e:
+                pred_text = f"[ERROR] {repr(e)}"
+                pred = None
+
+            correct = int(pred == gold)
+            num_correct += correct
+
+            if pred is None:
+                num_parse_fail += 1
+
+            item = {
+                "idx": idx,
+                "question": question,
+                "gold": gold,
+                "output_text": pred_text,
+                "prediction": pred,
+                "correct": bool(correct),
+                "raw_output": pred_text,
+            }
+            results.append(item)
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
+            f.flush()
 
     total = len(results)
     acc = num_correct / total if total > 0 else 0.0
