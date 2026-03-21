@@ -159,7 +159,7 @@ def main():
 
         # ===== optimization =====
         learning_rate=1e-5,
-        num_train_epochs=5,
+        num_train_epochs=1,
 
         # ===== logging =====
         logging_steps=10,
@@ -171,7 +171,7 @@ def main():
 
         # ===== generation =====
         max_prompt_length=512,
-        max_completion_length=1024,
+        max_completion_length=8192,
         num_generations=16,
 
         temperature=0.7,
