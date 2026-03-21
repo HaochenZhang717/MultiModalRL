@@ -126,6 +126,8 @@ def main():
         torch_dtype=torch.bfloat16,
     )
     model.gradient_checkpointing_disable()
+    model.config.use_cache = False
+
     # ========= LoRA =========
     peft_config = LoraConfig(
         task_type=TaskType.CAUSAL_LM,
@@ -201,6 +203,7 @@ def main():
         processing_class=tokenizer,
         # ⭐ LoRA 注入
         peft_config=peft_config,
+        ddp_find_unused_parameters=False,
     )
 
     # ========= Train =========
