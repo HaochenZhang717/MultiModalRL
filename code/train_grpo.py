@@ -12,8 +12,8 @@ from peft import LoraConfig, TaskType
 # Config
 # =========================
 MODEL_NAME = '/playpen-shared/haochenz/DeepSeek-R1-Distill-Qwen-7B'
-DATA_PATH = "./datasets/GeoCount/shapes_3/train_task.json"
-OUTPUT_DIR = "./grpo_ckpt/shapes_3"
+DATA_PATH = "./datasets/GeoCount/shapes_2/train_task.json"
+OUTPUT_DIR = "./grpo_ckpt/shapes_2"
 
 
 WANDB_PROJECT = "grpo-GeoCount"

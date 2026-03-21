@@ -1,7 +1,7 @@
 python generate_data.py \
   --num_examples 1000 \
   --max_intersections 40 \
-  --num_shapes 3 \
+  --num_shapes 2 \
   --seed 1
 
 
