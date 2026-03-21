@@ -149,6 +149,7 @@ def main():
     # ========= GRPO Config =========
     training_args = GRPOConfig(
         output_dir=OUTPUT_DIR,
+        ddp_find_unused_parameters=False,
 
         remove_unused_columns=False,
 
@@ -203,7 +204,6 @@ def main():
         processing_class=tokenizer,
         # ⭐ LoRA 注入
         peft_config=peft_config,
-        ddp_find_unused_parameters=False,
     )
 
     # ========= Train =========
