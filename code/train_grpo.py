@@ -150,7 +150,7 @@ def main():
         remove_unused_columns=False,
 
         # ===== batch =====
-        per_device_train_batch_size=2,
+        per_device_train_batch_size=1,
         gradient_accumulation_steps=4,
 
         # ===== optimization =====
