@@ -125,7 +125,7 @@ def main():
         MODEL_NAME,
         torch_dtype=torch.bfloat16,
     )
-
+    model.gradient_checkpointing_disable()
     # ========= LoRA =========
     peft_config = LoraConfig(
         task_type=TaskType.CAUSAL_LM,
