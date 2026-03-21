@@ -73,18 +73,20 @@ def completion_to_text(completion):
 # Dataset
 # =========================
 def load_data(path):
-    with open(path, "r") as f:
-        raw_data = json.load(f)
-
     data = []
-    for item in raw_data:
-        answer = extract_answer(item["target_scores"])
-        data.append({
-            "prompt": build_prompt(item["input"]),
-            "answer": answer,
-        })
+
+    with open(path, "r") as f:
+        for line in f:
+            item = json.loads(line)
+            answer = extract_answer(item["target_scores"])
+            data.append({
+                "prompt": build_prompt(item["input"]),
+                "answer": answer,
+            })
 
     return Dataset.from_list(data)
+
+
 
 
 # =========================
