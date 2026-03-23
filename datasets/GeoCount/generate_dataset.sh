@@ -1,5 +1,5 @@
 python generate_data.py \
-  --num_examples 1000 \
+  --num_examples 100 \
   --max_intersections 40 \
   --num_shapes 2 \
   --seed 1
