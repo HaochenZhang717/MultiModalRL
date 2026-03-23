@@ -39,13 +39,24 @@ def build_prompt(question: str, use_chat_template: bool = True):
         Final answer: <integer>
     """
 
+    # system_msg = (
+    #     "You are a mathematical reasoning assistant.\n\n"
+    #     "Carefully analyze geometry problems and reason step by step.\n"
+    #     "Intersection points occur when the boundaries of shapes cross each other.\n"
+    #     "Count all unique intersection points.\n\n"
+    #     "At the end, output the answer in the following format:\n"
+    #     "Final answer: <integer>"
+    # )
+
     system_msg = (
         "You are a mathematical reasoning assistant.\n\n"
-        "Carefully analyze geometry problems and reason step by step.\n"
+        "Solve geometry problems by reasoning carefully and step by step.\n"
         "Intersection points occur when the boundaries of shapes cross each other.\n"
         "Count all unique intersection points.\n\n"
-        "At the end, output the answer in the following format:\n"
-        "Final answer: <integer>"
+        "Output requirements:\n"
+        "1. You may reason step by step before giving the final answer.\n"
+        "2. The final line of your response must be exactly in this format:\n"
+        "Final answer: <integer>\n"
     )
 
     user_msg = (
