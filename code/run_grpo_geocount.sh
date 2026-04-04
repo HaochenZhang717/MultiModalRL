@@ -20,7 +20,7 @@ mkdir -p "$(dirname $LOG_PATH)"
 # include one additional GPU beyond NUM_TRAIN_GPUS.
 # Example: 4 training GPUs -> CUDA_VISIBLE_DEVICES=0,1,2,3,4 (4 is for vLLM)
 NUM_TRAIN_GPUS=4
-CUDA_VISIBLE_DEVICES=0,1,2,3,4
+CUDA_VISIBLE_DEVICES=0,2,3,4
 
 CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES torchrun \
     --nproc_per_node=$NUM_TRAIN_GPUS \
