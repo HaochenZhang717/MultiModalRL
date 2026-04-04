@@ -11,13 +11,15 @@ from peft import LoraConfig, TaskType
 # =========================
 # Config
 # =========================
-MODEL_NAME = '/playpen-shared/haochenz/DeepSeek-R1-Distill-Qwen-7B'
+# MODEL_NAME = '/playpen-shared/haochenz/DeepSeek-R1-Distill-Qwen-7B'
+MODEL_NAME = 'Qwen/Qwen3-8B'
 DATA_PATH = "./datasets/GeoCount/shapes_2/train_task.json"
-OUTPUT_DIR = "./grpo_ckpt/shapes_2"
+OUTPUT_DIR = f"./grpo_ckpt/{MODEL_NAME}/shapes_2"
 
 
 WANDB_PROJECT = "grpo-GeoCount"
-WANDB_RUN_NAME = "r1-lora-verifiable"
+# WANDB_RUN_NAME = "r1-lora-verifiable"
+WANDB_RUN_NAME = MODEL_NAME
 
 
 # =========================
