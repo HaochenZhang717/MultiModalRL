@@ -198,7 +198,7 @@ def main():
         scale_rewards="group",
 
         epsilon=0.2,
-        num_iterations=0.1,
+        num_iterations=1,
 
         importance_sampling_level="sequence",  # ⭐ 关键
         mask_truncated_completions=True,  # ⭐ 稳定性
