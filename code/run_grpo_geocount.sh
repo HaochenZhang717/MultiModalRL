@@ -28,7 +28,7 @@ CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES torchrun \
     --node_rank=0 \
     --master_addr="127.0.0.1" \
     --master_port=12346 \
-    code/grpo_geocount.py \
+    grpo_geocount.py \
     --model_name_or_path $MODEL_PATH \
     --data_path $DATA_PATH \
     --reward_funcs accuracy format \
