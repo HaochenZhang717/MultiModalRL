@@ -8,7 +8,7 @@ export DEBUG_MODE="true"
 export LOG_PATH="./logs/grpo_stepgame_debug.log"
 
 MODEL_PATH="Qwen/Qwen2.5-7B-Instruct"
-DATA_PATH="./datasets/StepGame/data_nhop6/train.jsonl"
+DATA_PATH="../datasets/StepGame/data_nhop6/train.jsonl"
 OUTPUT_DIR="./grpo_ckpt/stepgame_qwen3"
 RUN_NAME="qwen2.5-7b-lora-grpo-stepgame-nhop6"
 
