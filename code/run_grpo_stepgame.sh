@@ -32,7 +32,7 @@ CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES torchrun \
     --model_name_or_path $MODEL_PATH \
     --data_path $DATA_PATH \
     --story_key story \
-    --reward_funcs accuracy format \
+    --reward_funcs accuracy \
     --output_dir $OUTPUT_DIR \
     --run_name $RUN_NAME \
     \
