@@ -54,7 +54,8 @@ CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES torchrun \
     --lora_dropout 0.05 \
     \
     --bf16 true \
-    --gradient_checkpointing true \
+    --gradient_checkpointing false \
+    --ddp_find_unused_parameters false \
     --logging_steps 1 \
     --save_steps 50 \
     --save_total_limit 3 \
