@@ -37,7 +37,7 @@ CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES torchrun \
     --run_name $RUN_NAME \
     \
     --max_prompt_length 2048 \
-    --max_completion_length 4096 \
+    --max_completion_length 1024 \
     --num_generations 8 \
     --temperature 1.0 \
     \
@@ -54,7 +54,7 @@ CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES torchrun \
     --lora_dropout 0.05 \
     \
     --bf16 true \
-    --gradient_checkpointing false \
+    --gradient_checkpointing true \
     --ddp_find_unused_parameters false \
     --logging_steps 1 \
     --save_steps 50 \

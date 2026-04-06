@@ -172,4 +172,8 @@ def main(script_args, training_args, model_args):
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, GRPOConfig, ModelConfig))
     script_args, training_args, model_args = parser.parse_args_and_config()
+    if getattr(training_args, "gradient_checkpointing", False):
+        gc_kwargs = getattr(training_args, "gradient_checkpointing_kwargs", None)
+        if not gc_kwargs:
+            training_args.gradient_checkpointing_kwargs = {"use_reentrant": False}
     main(script_args, training_args, model_args)
