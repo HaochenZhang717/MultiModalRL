@@ -45,7 +45,7 @@ CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES torchrun \
     --gradient_accumulation_steps 4 \
     --learning_rate 1e-5 \
     --lr_scheduler_type "constant" \
-    --num_train_epochs 1 \
+    --max_steps 500 \
     \
     --use_peft true \
     --lora_r 32 \
