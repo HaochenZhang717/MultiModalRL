@@ -36,9 +36,6 @@ CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES torchrun \
     --output_dir $OUTPUT_DIR \
     --run_name $RUN_NAME \
     \
-    --use_vllm true \
-    --vllm_gpu_memory_utilization 0.7 \
-    \
     --max_prompt_length 2048 \
     --max_completion_length 4096 \
     --num_generations 8 \
